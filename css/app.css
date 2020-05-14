@@ -1,0 +1,128 @@
+.tablero{
+    display: grid;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.padding-0{
+   padding: 0px !important;
+}
+
+.col-tablero{
+    max-width: 100px !important;
+}
+
+.flip-card {
+    background-color: transparent;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #f1f1f1;
+    perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  }
+  
+  /* This container is needed to position the front and back side */
+  .fliper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+  
+  /* Do an horizontal flip when you move the mouse over the flip box container */
+  .flip-card .fliper.fliping {
+    transform: rotateY(180deg);
+  }
+  
+  /* Position the front and back side */
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+  }
+  
+  /* Style the front side (fallback if image is missing) */
+  .card-front {
+    background-color: #bbb;
+    color: white;
+
+    /* toCenter */
+        justify-content: center;
+        display: flex;
+        align-items: center;
+  }
+  
+  /* Style the back side */
+  .card-back {
+    background-color: dodgerblue;
+    color: white;
+    transform: rotateY(180deg);
+
+    /* toCenter */
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  /* body{
+    background-color: #23272a !important;
+    .container{
+      background-color: 	#424549;
+    }
+  } */
+  body{
+  }
+  .max-width-720{
+    background-color: #f5f5f0;
+    max-width: 720px !important;
+  }
+
+  @media (min-width: 720px){
+    .pad-100{
+      margin-top:50px;
+      padding: 0px !important;
+      padding-bottom: 50px;
+    }
+  }
+
+  @media (min-width: 720px){
+    .header{
+      height:  100px;
+          /* toCenter */
+          justify-content: center;
+          display: flex;
+          align-items: center;
+    }
+  }
+
+  /* Color cards */
+  .green-card{
+    background-color: #33ff66 !important;
+  }
+
+  .blue-card{
+    background-color: #6666ff !important;
+  }
+
+  .red-card{
+    background-color: #ff3333 !important;
+  }
+  hr{
+    margin: 0px !important;
+  }
+
+  .invert{
+    filter: invert(100%);
+  }
+
+  /* modals css */
+  .modal-content{
+    max-width: 300px !important;
+  }
+  .modal-dialog{
+    justify-content: center;
+  }
