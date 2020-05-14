@@ -149,16 +149,17 @@ var juego = (function(){
     function toggleDarkTheme(){
         if(darkTheme)
         {
-            this.classList.toggle('invert');
+            document.getElementById('theme').classList.toggle('invert');
             document.body.style.background = "";
             offsetLum = 20;
         }
         else{
-            this.classList.toggle('invert');
+            document.getElementById('theme').classList.toggle('invert');
             document.body.style.background = "#23272a";
             offsetLum = 0;
         }
         darkTheme = !darkTheme;
+        window.localStorage.setItem('darkTheme',darkTheme);
     }
 
     function win(){
@@ -200,23 +201,39 @@ var juego = (function(){
 
 window.onload = function(){
     
-    document.getElementById('theme').addEventListener('click',juego.togleDarkTheme);
+    document.getElementById('theme').addEventListener('click', () => {juego.togleDarkTheme()});
     document.getElementById('btn-start').addEventListener('click',() => {juego.start()});
     // document.getElementById('button-start').addEventListener('click',juego.start());
     $('#welcome-modal').modal();    
     juego.shuffle();
     juego.generarTablero();
-    $('.card-front').addClass('green-card');
+
+
+    // carga de temas
+    colorPredef = window.localStorage.getItem('colorCard');
+    darkPredef = window.localStorage.getItem('darkTheme');
+    if(darkPredef == "true")
+        juego.togleDarkTheme();
+    if(colorPredef)
+        $('.card-front').addClass(colorPredef);
+    else
+         $('.card-front').addClass('green-card');
+
+    
+
     //change color cards
     document.getElementById('color-green').addEventListener('click',() =>{
+        window.localStorage.setItem('colorCard','green-card');
         $('.card-front').addClass('green-card');
         $('.card-front').removeClass('red-card blue-card');
     });
     document.getElementById('color-red').addEventListener('click',() =>{
+        window.localStorage.setItem('colorCard','red-card');
         $('.card-front').addClass('red-card');
         $('.card-front').removeClass('green-card blue-card');
     });
     document.getElementById('color-blue').addEventListener('click',() =>{
+        window.localStorage.setItem('colorCard','blue-card');
         $('.card-front').addClass('blue-card');
         $('.card-front').removeClass('red-card green-card');
     });
