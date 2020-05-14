@@ -9,9 +9,12 @@ window.fbAsyncInit = function() {
 
 console.log(document.getElementById('btn-share'));
 document.getElementById('btn-share').addEventListener('click',() =>{
+    min = document.getElementById('min').textContent;
+    seg = document.getElementById('seg').textContent;
     FB.ui({
         method: 'share',
-        href: 'https://semseycesar.github.io/proyecto-1/'
+        href: 'https://semseycesar.github.io/proyecto-1/',
+        name: 'My time '+min+":"+seg+" :D",
       }, function(response){})
 }
 );
