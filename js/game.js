@@ -4,12 +4,9 @@ var juego = (function(){
     var matrix = [...Array(SIZE*SIZE).keys()].map( j => j % TOTAL_PAIRS);
     var selectedCard = null;
 
-    //theme
-    var darkTheme = false;
-    var offsetLum  = 20;
 
     //crono
-    var segundos= 0;
+    var segundos= 1;
     var minutos= 0;
     var cronometro;
 
@@ -40,7 +37,7 @@ var juego = (function(){
             return;
         this.addEventListener("transitionend", onTransitionEnd);
         number = getNumberCard(this);
-        cardManager.showNumber(this, number, bgColorCard(number));
+        cardManager.showNumber(this, number, themeManager.bgColorCard(number, TOTAL_PAIRS));
     }
 
 
@@ -93,30 +90,15 @@ var juego = (function(){
         matrix.sort(() => Math.random() - 0.5);
     }
 
-    function toggleDarkTheme(){
-        if(darkTheme)
-        {
-            document.getElementById('theme').classList.toggle('invert');
-            document.body.style.background = "";
-            offsetLum = 20;
-        }
-        else{
-            document.getElementById('theme').classList.toggle('invert');
-            document.body.style.background = "#23272a";
-            offsetLum = 0;
-        }
-        darkTheme = !darkTheme;
-        window.localStorage.setItem('darkTheme',darkTheme);
+    function activateButtonStart(){
+        document.getElementById('btn-start').addEventListener('click',() => {juego.start()});
     }
-
-    function bgColorCard(number){
-        return "hsl("+ Math.floor(355 / TOTAL_PAIRS) * number +",100%,"+ (50 + offsetLum) +"%)";
-    }
-    
     function win(){
         stop();
         document.getElementById('btn-retry').addEventListener('click', () =>{ location.reload()});
-        body = document.createTextNode("your time is: "+minutos+":"+segundos);
+        str_min = minutos < 10 ? "0"+minutos : ""+minutos;
+        str_seg = segundos < 10 ? "0"+segundos : ""+segundos;
+        body = document.createTextNode("your time is: "+str_min+":"+str_seg);
         document.getElementById('modal-body-win').appendChild(body);
         $('#win-modal').modal();
     }
@@ -145,6 +127,6 @@ var juego = (function(){
         start: start,
         shuffle: shuffle,
         generarTablero:generarTablero,
-        togleDarkTheme: toggleDarkTheme,
+        activateButtonStart: activateButtonStart,
     }
 })();

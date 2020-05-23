@@ -20,6 +20,12 @@
     height: 100px;
     border: 1px solid #f1f1f1;
     perspective: 1000px; /* Remove this if you don't want the 3D effect */
+
+    /*Texto No Seleccionable */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -ms-user-select:none;
   }
   
   /* This container is needed to position the front and back side */
