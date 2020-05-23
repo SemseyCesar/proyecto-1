@@ -183,9 +183,9 @@ var juego = (function(){
                 if(segundos == 60){
                     segundos=0;
                     minutos++;
-                    minElement.innerHTML = minutos;
+                    minElement.innerHTML = minutos < 10 ? "0" + minutos : minutos;
                 }
-                segElement.innerHTML = segundos;
+                segElement.innerHTML = segundos < 10 ? "0" + segundos : segundos;
                 segundos++;
             },1000
         );
@@ -203,7 +203,7 @@ window.onload = function(){
     
     document.getElementById('theme').addEventListener('click', () => {juego.togleDarkTheme()});
     document.getElementById('btn-start').addEventListener('click',() => {juego.start()});
-    // document.getElementById('button-start').addEventListener('click',juego.start());
+
     $('#welcome-modal').modal();    
     juego.shuffle();
     juego.generarTablero();
@@ -219,22 +219,27 @@ window.onload = function(){
     else
          $('.card-front').addClass('green-card');
 
-    
+    themesConfig = [
+        {button: 'color-green' , theme: 'green-card'},
+        {button: 'color-red' , theme: 'red-card'},
+        {button: 'color-blue' , theme: 'blue-card'},
+    ]
+    initButtonsColorCard(themesConfig);
+}
 
-    //change color cards
-    document.getElementById('color-green').addEventListener('click',() =>{
-        window.localStorage.setItem('colorCard','green-card');
-        $('.card-front').addClass('green-card');
-        $('.card-front').removeClass('red-card blue-card');
-    });
-    document.getElementById('color-red').addEventListener('click',() =>{
-        window.localStorage.setItem('colorCard','red-card');
-        $('.card-front').addClass('red-card');
-        $('.card-front').removeClass('green-card blue-card');
-    });
-    document.getElementById('color-blue').addEventListener('click',() =>{
-        window.localStorage.setItem('colorCard','blue-card');
-        $('.card-front').addClass('blue-card');
-        $('.card-front').removeClass('red-card green-card');
-    });
+function changeColorCards(themeColor, themes){
+    window.localStorage.setItem('colorCard',themeColor);
+    $('.card-front').addClass(themeColor);
+    otherThemes = themes.filter( t => t != themeColor);
+    $('.card-front').removeClass(otherThemes.join(' '));
+}
+
+function initButtonsColorCard(themesConfig){
+    themes = themesConfig.map(i => i.theme);
+    themesConfig.forEach(
+        item => 
+            document.getElementById(item.button).addEventListener('click',() =>{
+                changeColorCards(item.theme, themes);
+            })
+        )
 }
