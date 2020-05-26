@@ -4,12 +4,6 @@ var juego = (function(){
     var matrix = [...Array(SIZE*SIZE).keys()].map( j => j % TOTAL_PAIRS);
     var selectedCard = null;
 
-
-    //crono
-    var segundos= 1;
-    var minutos= 0;
-    var cronometro;
-
     //crea el tablero
     function generarTablero(){
         var tablero = document.getElementById("tablero");
@@ -54,10 +48,9 @@ var juego = (function(){
                 selectedCard = null;
             }
             else{
-                cardManager.hideNumber(selectedCard);
-                cardManager.hideNumber(this);
-                this.addEventListener('click', onClickCard);
-                selectedCard.addEventListener('click', onClickCard);
+                let card_aux =selectedCard;
+                cardManager.hideNumber(card_aux,() => card_aux.addEventListener('click', onClickCard));
+                cardManager.hideNumber(this, () => this.addEventListener('click', onClickCard));
                 selectedCard = null;
             }
         else
@@ -91,40 +84,18 @@ var juego = (function(){
     }
 
     function activateButtonStart(){
-        document.getElementById('btn-start').addEventListener('click',() => {juego.start()});
+        document.getElementById('btn-start').addEventListener('click',() => {crono.start()});
     }
     function win(){
-        stop();
+        crono.stop();
         document.getElementById('btn-retry').addEventListener('click', () =>{ location.reload()});
-        str_min = minutos < 10 ? "0"+minutos : ""+minutos;
-        str_seg = segundos < 10 ? "0"+segundos : ""+segundos;
-        body = document.createTextNode("your time is: "+str_min+":"+str_seg);
+        body = document.createTextNode("your time is "+ crono.timeToString());
         document.getElementById('modal-body-win').appendChild(body);
         $('#win-modal').modal();
     }
 
-    function stop(){
-        clearInterval(cronometro);
-    }
-
-    function start(){
-        segElement = document.getElementById('seg');
-        minElement = document.getElementById('min');
-        cronometro = window.setInterval(
-            function(){
-                if(segundos == 60){
-                    segundos=0;
-                    minutos++;
-                    minElement.innerHTML = minutos < 10 ? "0" + minutos : minutos;
-                }
-                segElement.innerHTML = segundos < 10 ? "0" + segundos : segundos;
-                segundos++;
-            },1000
-        );
-    }
 
     return{
-        start: start,
         shuffle: shuffle,
         generarTablero:generarTablero,
         activateButtonStart: activateButtonStart,

@@ -18,9 +18,9 @@ var cardManager = (function(){
 
     //elimina el hijo del elemento de la cara frontal de la carta,
     // para que el dom no revele el numero de la carta
-    function hideNumber(card){
+    function hideNumber(card,callback){
+        card.addEventListener('transitionend',removeBackground(card,callback));
         card.childNodes[0].classList.remove("fliping");
-        card.addEventListener('transitionend', removeBackground);
         cardBack = card.childNodes[0].childNodes[1];
         cardBack.removeChild(cardBack.childNodes[0]);
     }
@@ -28,9 +28,10 @@ var cardManager = (function(){
     //elimina el background 
     // hice esto para que no apareciera en el dom el color de cada carta ya que 
     // esto revelaria el valor de la carta(cada carta tiene un color distinto)
-    function removeBackground(){
-        this.removeEventListener('transitionend',removeBackground,false);
-        this.childNodes[0].childNodes[1].style.backgroundColor="";
+     removeBackground = (card,callback) => {
+        card.removeEventListener('transitionend',removeBackground);
+        card.childNodes[0].childNodes[1].style.backgroundColor="";
+        callback();
     }
 
     //crea un elemento carta con el id card-i-j donde i j son los indices en la matriz

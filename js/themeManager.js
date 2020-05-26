@@ -1,7 +1,7 @@
 var themeManager = (function(){
 
     darkTheme = false;
-    offsetLum = 0;
+    offsetLum = 20;
 
     function loadThemeFromLocalStorage(){
         colorPredef = window.localStorage.getItem('colorCard');
