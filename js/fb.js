@@ -11,6 +11,7 @@ console.log(document.getElementById('btn-share'));
 document.getElementById('btn-share').addEventListener('click',() =>{
     min = document.getElementById('min').textContent;
     seg = document.getElementById('seg').textContent;
+    document.getElementById('fb-title').setAttribute('content','My time is: '+ min+seg);
     FB.ui({
         method: 'share',
         href: 'https://semseycesar.github.io/proyecto-1/',
